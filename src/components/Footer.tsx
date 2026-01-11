@@ -1,4 +1,4 @@
-import { Phone, Facebook, Instagram } from "lucide-react";
+import { Phone, Facebook, Instagram, Mail } from "lucide-react";
 import atpLogo from "@/assets/atp-logo.png";
 
 const Footer = () => {
@@ -52,6 +52,9 @@ const Footer = () => {
                 "Full House Soft Washing",
                 "Gutter Cleanout",
                 "Sidewalk/Driveway Cleaning",
+                "Stone/Brick Cleaning",
+                "Vinyl/Fence Cleaning",
+                "Deck & Stair Washing",
               ].map((service) => (
                 <li key={service}>
                   <a
@@ -76,6 +79,15 @@ const Footer = () => {
                   className="text-primary-foreground/70 hover:text-primary-foreground transition-colors"
                 >
                   717-814-0704
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
+                <Mail className="h-5 w-5 text-primary flex-shrink-0" />
+                <a
+                  href="mailto:atp@atpprowashing.com"
+                  className="text-primary-foreground/70 hover:text-primary-foreground transition-colors"
+                >
+                  atp@atpprowashing.com
                 </a>
               </li>
               <li className="text-primary-foreground/70">
