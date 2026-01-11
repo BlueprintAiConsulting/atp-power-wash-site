@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import serviceHouseWash from "@/assets/service-house-wash.jpg";
 import serviceGutter from "@/assets/service-gutter.jpg";
 import serviceSidewalk from "@/assets/service-sidewalk.jpg";
+import serviceStone from "@/assets/service-stone.jpg";
 
 const services = [
   {
@@ -18,6 +19,11 @@ const services = [
     image: serviceSidewalk,
     title: "Sidewalk/Driveway Cleaning",
     description: "Restore your concrete surfaces to like-new condition.",
+  },
+  {
+    image: serviceStone,
+    title: "Stone & Brick Cleaning",
+    description: "Safely restore the natural beauty of your stone and brick surfaces.",
   },
 ];
 
@@ -40,7 +46,7 @@ const Services = () => {
         </div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {services.map((service, index) => (
             <div
               key={service.title}
