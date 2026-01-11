@@ -21,6 +21,8 @@ const Index = () => {
         <FAQ />
         <QuoteSection />
       </main>
+      {/* Add padding at bottom for mobile sticky bar */}
+      <div className="md:hidden h-16" />
       <Footer />
     </div>
   );
