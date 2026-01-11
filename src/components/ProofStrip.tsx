@@ -42,15 +42,9 @@ const ProofStrip = () => {
                 className="w-full h-auto"
                 autoPlay
                 muted
+                loop
                 playsInline
-                preload="metadata"
-                onTimeUpdate={(e) => {
-                  const video = e.currentTarget;
-                  // Restart 0.5 seconds before end to avoid bad final frame
-                  if (video.duration && video.currentTime >= video.duration - 0.5) {
-                    video.currentTime = 0;
-                  }
-                }}
+                preload="auto"
               >
                 <source src={actionVideo} type="video/mp4" />
                 Your browser does not support the video tag.
