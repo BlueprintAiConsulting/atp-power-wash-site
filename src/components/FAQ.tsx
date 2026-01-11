@@ -33,9 +33,8 @@ const FAQ = () => {
           <span className="inline-block text-primary font-heading font-bold text-sm uppercase tracking-widest mb-4">
             FAQ
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-foreground mb-6">
-            Frequently Asked{" "}
-            <span className="text-gradient-brand">Questions</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gradient-brand mb-6">
+            Frequently Asked Questions
           </h2>
         </div>
 
