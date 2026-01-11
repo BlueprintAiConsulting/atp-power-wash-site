@@ -41,22 +41,26 @@ const Hero = () => {
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-10 animate-fade-in" style={{ animationDelay: "0.3s" }}>
-            <Button variant="cta" size="xl" asChild>
+          <div className="flex flex-col gap-3 sm:flex-row sm:gap-4 mb-10 animate-fade-in" style={{ animationDelay: "0.3s" }}>
+            <Button variant="cta" size="xl" className="w-full sm:w-auto" asChild>
               <a href="#quote">Free Quote</a>
             </Button>
-            <Button variant="heroOutline" size="xl" asChild>
-              <a href="tel:7178140704" className="flex items-center gap-2">
-                <Phone className="h-5 w-5" />
-                Call 717-814-0704
-              </a>
-            </Button>
-            <Button variant="heroOutline" size="xl" asChild>
-              <a href={`sms:7178140704?body=${smsText}`} className="flex items-center gap-2">
-                <MessageSquare className="h-5 w-5" />
-                Text for Fastest Quote
-              </a>
-            </Button>
+            <div className="flex gap-2 sm:gap-4">
+              <Button variant="heroOutline" size="xl" className="flex-1 sm:flex-none px-4 sm:px-6" asChild>
+                <a href="tel:7178140704" className="flex items-center justify-center gap-2">
+                  <Phone className="h-5 w-5" />
+                  <span className="hidden xs:inline">Call</span>
+                  <span className="xs:hidden">Call</span>
+                </a>
+              </Button>
+              <Button variant="heroOutline" size="xl" className="flex-1 sm:flex-none px-4 sm:px-6" asChild>
+                <a href={`sms:7178140704?body=${smsText}`} className="flex items-center justify-center gap-2">
+                  <MessageSquare className="h-5 w-5" />
+                  <span className="hidden sm:inline">Text for Quote</span>
+                  <span className="sm:hidden">Text</span>
+                </a>
+              </Button>
+            </div>
           </div>
 
           {/* Trust Points */}
