@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
+import { supabase } from "@/integrations/supabase/client";
 
 const towns = [
   "Lancaster",
@@ -122,36 +123,35 @@ const QuoteSection = () => {
       return;
     }
 
-    // TODO: Replace with your Formspree endpoint
-    const formspreeEndpoint = "https://formspree.io/f/YOUR_FORM_ID";
-    
     try {
-      const response = await fetch(formspreeEndpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+      const { error } = await supabase
+        .from("quote_requests")
+        .insert({
+          name: formData.name,
+          phone: formData.phone,
+          address: formData.address,
+          town: formData.town,
+          service: formData.service,
+          details: formData.details || null,
+        });
+
+      if (error) throw error;
+
+      toast({
+        title: "Quote Request Sent!",
+        description: "We'll get back to you as soon as possible.",
       });
-      
-      if (response.ok) {
-        toast({
-          title: "Quote Request Sent!",
-          description: "We'll get back to you as soon as possible.",
-        });
-        setFormData({
-          name: "",
-          phone: "",
-          address: "",
-          town: "",
-          service: "",
-          details: "",
-        });
-        setErrors({});
-      } else {
-        throw new Error("Form submission failed");
-      }
+      setFormData({
+        name: "",
+        phone: "",
+        address: "",
+        town: "",
+        service: "",
+        details: "",
+      });
+      setErrors({});
     } catch (error) {
+      console.error("Error submitting quote:", error);
       toast({
         title: "Something went wrong",
         description: "Please try calling or texting us instead.",
