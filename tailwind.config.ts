@@ -63,8 +63,8 @@ export default {
       },
       fontSize: {
         services: "2.4375rem",
-        "services-md": "2.925rem",
-        "services-lg": "3.9rem",
+        "services-md": "2.9250rem",
+        "services-lg": "3.9000rem",
       },
       borderRadius: {
         lg: "var(--radius)",
