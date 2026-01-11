@@ -116,7 +116,7 @@ const QuoteSection = () => {
 
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {/* Option A: Call/Text Card */}
-          <div className="bg-brand-navy rounded-2xl p-8 text-primary-foreground">
+          <div className="bg-gradient-to-br from-primary via-primary to-brand-blue-dark rounded-2xl p-8 text-primary-foreground shadow-blue">
             <div className="text-center mb-8">
               <h3 className="font-heading font-bold text-2xl mb-2">
                 Fastest Quote by Text
