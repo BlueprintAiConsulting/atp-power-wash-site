@@ -3,6 +3,7 @@ import serviceHouseWash from "@/assets/service-house-wash.jpg";
 import serviceGutter from "@/assets/service-gutter.jpg";
 import serviceSidewalk from "@/assets/service-sidewalk.jpg";
 import serviceStone from "@/assets/service-stone.jpg";
+import serviceFence from "@/assets/service-fence.png";
 
 const services = [
   {
@@ -24,6 +25,11 @@ const services = [
     image: serviceStone,
     title: "Stone & Brick Cleaning",
     description: "Safely restore the natural beauty of your stone and brick surfaces.",
+  },
+  {
+    image: serviceFence,
+    title: "Vinyl/Fence Cleaning",
+    description: "Remove algae, dirt, and grime to make your fence look brand new.",
   },
 ];
 
