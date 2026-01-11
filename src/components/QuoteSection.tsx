@@ -11,29 +11,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-
-const towns = [
-  "Lancaster",
-  "Harrisburg",
-  "York",
-  "Lebanon",
-  "Chambersburg",
-  "Carlisle",
-  "Camp Hill",
-  "Mechanicsburg",
-  "Lititz",
-  "Ephrata",
-  "Other nearby town",
-];
-
-const services = [
-  "Full House Soft Washing",
-  "Gutter Cleanout",
-  "Sidewalk/Driveway Cleaning",
-  "Other",
-];
-
-const QUOTE_TEXT = "Hi ATP, I want a free quote. Address: ____ Town: ____ Service: House soft wash / driveway / sidewalk. Best time: ____. Photos attached.";
+import { CALL_LINK, PHONE_DISPLAY, QUOTE_TEMPLATE, SMS_LINK } from "@/lib/contact";
+import { QUOTE_TOWNS } from "@/data/locations";
+import { QUOTE_SERVICE_OPTIONS } from "@/data/services";
 
 const QuoteSection = () => {
   const { toast } = useToast();
@@ -47,10 +27,8 @@ const QuoteSection = () => {
     details: "",
   });
 
-  const smsText = encodeURIComponent(QUOTE_TEXT);
-
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(QUOTE_TEXT);
+    await navigator.clipboard.writeText(QUOTE_TEMPLATE);
     setCopied(true);
     toast({
       title: "Copied!",
@@ -62,7 +40,16 @@ const QuoteSection = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // TODO: Replace with your Formspree endpoint
-    const formspreeEndpoint = "https://formspree.io/f/YOUR_FORM_ID";
+    const formspreeEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT;
+
+    if (!formspreeEndpoint) {
+      toast({
+        title: "Online form unavailable",
+        description: "Please text or call us for the fastest quote.",
+        variant: "destructive",
+      });
+      return;
+    }
     
     try {
       const response = await fetch(formspreeEndpoint, {
@@ -129,7 +116,7 @@ const QuoteSection = () => {
 
             <div className="bg-primary-foreground/10 rounded-lg p-4 mb-6">
               <p className="text-sm leading-relaxed mb-4">
-                {QUOTE_TEXT}
+                {QUOTE_TEMPLATE}
               </p>
               <Button
                 variant="secondary"
@@ -152,17 +139,17 @@ const QuoteSection = () => {
 
             <div className="space-y-3">
               <Button variant="cta" className="w-full" size="lg" asChild>
-                <a href={`sms:7178140704?body=${smsText}`} className="flex items-center justify-center gap-2">
-                  <MessageSquare className="h-5 w-5" />
-                  Text 717-814-0704
-                </a>
-              </Button>
-              <Button variant="heroOutline" className="w-full" size="lg" asChild>
-                <a href="tel:7178140704" className="flex items-center justify-center gap-2">
-                  <Phone className="h-5 w-5" />
-                  Call 717-814-0704
-                </a>
-              </Button>
+                 <a href={SMS_LINK} className="flex items-center justify-center gap-2">
+                   <MessageSquare className="h-5 w-5" />
+                  Text {PHONE_DISPLAY}
+                 </a>
+               </Button>
+               <Button variant="heroOutline" className="w-full" size="lg" asChild>
+                 <a href={CALL_LINK} className="flex items-center justify-center gap-2">
+                   <Phone className="h-5 w-5" />
+                  Call {PHONE_DISPLAY}
+                 </a>
+               </Button>
             </div>
           </div>
 
@@ -205,7 +192,7 @@ const QuoteSection = () => {
                   <SelectValue placeholder="Select Town" />
                 </SelectTrigger>
                 <SelectContent>
-                  {towns.map((town) => (
+                  {QUOTE_TOWNS.map((town) => (
                     <SelectItem key={town} value={town}>
                       {town}
                     </SelectItem>
@@ -220,7 +207,7 @@ const QuoteSection = () => {
                   <SelectValue placeholder="Select Service" />
                 </SelectTrigger>
                 <SelectContent>
-                  {services.map((service) => (
+                  {QUOTE_SERVICE_OPTIONS.map((service) => (
                     <SelectItem key={service} value={service}>
                       {service}
                     </SelectItem>

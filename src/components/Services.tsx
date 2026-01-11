@@ -1,25 +1,5 @@
 import { Button } from "@/components/ui/button";
-import serviceHouseWash from "@/assets/service-house-wash.jpg";
-import serviceGutter from "@/assets/service-gutter.jpg";
-import serviceSidewalk from "@/assets/service-sidewalk.jpg";
-
-const services = [
-  {
-    image: serviceHouseWash,
-    title: "Full House Soft Washing",
-    description: "Gentle cleaning that removes dirt, mold, and mildew without damaging your siding.",
-  },
-  {
-    image: serviceGutter,
-    title: "Gutter Cleanout",
-    description: "Clear debris and buildup to keep your gutters flowing freely.",
-  },
-  {
-    image: serviceSidewalk,
-    title: "Sidewalk/Driveway Cleaning",
-    description: "Restore your concrete surfaces to like-new condition.",
-  },
-];
+import { SERVICE_CARDS } from "@/data/services";
 
 const Services = () => {
   return (
@@ -42,7 +22,7 @@ const Services = () => {
 
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {services.map((service, index) => (
+          {SERVICE_CARDS.map((service, index) => (
             <div
               key={service.title}
               className="group relative overflow-hidden rounded-2xl aspect-[4/5] animate-fade-in"

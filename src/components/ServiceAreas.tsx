@@ -1,17 +1,5 @@
 import { MapPin } from "lucide-react";
-
-const towns = [
-  "Lancaster",
-  "Harrisburg",
-  "York",
-  "Lebanon",
-  "Chambersburg",
-  "Carlisle",
-  "Camp Hill",
-  "Mechanicsburg",
-  "Lititz",
-  "Ephrata",
-];
+import { SERVICE_TOWNS } from "@/data/locations";
 
 const ServiceAreas = () => {
   return (
@@ -32,7 +20,7 @@ const ServiceAreas = () => {
 
         {/* Towns Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 max-w-4xl mx-auto">
-          {towns.map((town, index) => (
+          {SERVICE_TOWNS.map((town, index) => (
             <div
               key={town}
               className="flex items-center gap-2 bg-muted rounded-lg p-4 animate-fade-in"
