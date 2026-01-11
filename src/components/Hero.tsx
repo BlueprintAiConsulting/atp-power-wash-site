@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Star } from "lucide-react";
+import { CheckCircle, Star, Phone, MessageSquare } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const Hero = () => {
+  const smsText = encodeURIComponent("Hi ATP, I want a free quote. Address: ____ Town: ____ Service: House soft wash / driveway / sidewalk. Best time: ____. Photos attached.");
+
   return (
     <section className="relative min-h-[90vh] flex items-center pt-20">
       {/* Background Image */}
@@ -23,29 +25,37 @@ const Hero = () => {
               ))}
             </div>
             <span className="text-primary-foreground text-sm font-medium">
-              5-Star Rated in Pennsylvania
+              5-Star Rated in South Central PA
             </span>
           </div>
 
           {/* Heading */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-primary-foreground leading-tight mb-6 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-            Professional Power Washing That{" "}
-            <span className="text-brand-red">Transforms</span> Your Property
+            Professional Power Washing by{" "}
+            <span className="text-brand-red">ATP Power Washing Solutions</span>
           </h1>
 
           {/* Subheading */}
           <p className="text-lg md:text-xl text-primary-foreground/90 mb-8 max-w-xl animate-fade-in" style={{ animationDelay: "0.2s" }}>
-            Restore your home or business to its original beauty with ATP Power Washing Solutions. 
-            Serving residential and commercial properties throughout Pennsylvania.
+            York-area based. Serving South Central PA with fast quotes by text.
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 mb-10 animate-fade-in" style={{ animationDelay: "0.3s" }}>
-            <Button variant="cta" size="xl">
-              Get Your Free Quote
+            <Button variant="cta" size="xl" asChild>
+              <a href="#quote">Free Quote</a>
             </Button>
-            <Button variant="heroOutline" size="xl">
-              View Our Services
+            <Button variant="heroOutline" size="xl" asChild>
+              <a href="tel:7178140704" className="flex items-center gap-2">
+                <Phone className="h-5 w-5" />
+                Call 717-814-0704
+              </a>
+            </Button>
+            <Button variant="heroOutline" size="xl" asChild>
+              <a href={`sms:7178140704?body=${smsText}`} className="flex items-center gap-2">
+                <MessageSquare className="h-5 w-5" />
+                Text for Fastest Quote
+              </a>
             </Button>
           </div>
 

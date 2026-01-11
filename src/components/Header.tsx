@@ -9,8 +9,8 @@ const Header = () => {
   const navLinks = [
     { label: "Home", href: "#" },
     { label: "Services", href: "#services" },
-    { label: "About", href: "#about" },
-    { label: "Contact", href: "#contact" },
+    { label: "Service Areas", href: "#service-areas" },
+    { label: "FAQ", href: "#faq" },
   ];
 
   return (
@@ -22,8 +22,11 @@ const Header = () => {
             <img
               src={atpLogo}
               alt="ATP Power Washing Solutions"
-              className="h-16 w-auto"
+              className="h-14 w-auto"
             />
+            <span className="hidden lg:block font-heading font-bold text-lg">
+              <span className="text-brand-red">ATP Power Washing Solutions</span>
+            </span>
           </a>
 
           {/* Desktop Navigation */}
@@ -41,12 +44,12 @@ const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden md:flex items-center gap-4">
-            <a href="tel:+1234567890" className="flex items-center gap-2 text-sm font-semibold text-foreground">
+            <a href="tel:7178140704" className="flex items-center gap-2 text-sm font-semibold text-foreground">
               <Phone className="h-4 w-4 text-primary" />
-              (123) 456-7890
+              717-814-0704
             </a>
-            <Button variant="cta" size="lg">
-              Get Free Quote
+            <Button variant="cta" size="lg" asChild>
+              <a href="#quote">Free Quote</a>
             </Button>
           </div>
 
@@ -78,12 +81,12 @@ const Header = () => {
                   {link.label}
                 </a>
               ))}
-              <a href="tel:+1234567890" className="flex items-center gap-2 text-sm font-semibold text-foreground">
+              <a href="tel:7178140704" className="flex items-center gap-2 text-sm font-semibold text-foreground">
                 <Phone className="h-4 w-4 text-primary" />
-                (123) 456-7890
+                717-814-0704
               </a>
-              <Button variant="cta" className="mt-2">
-                Get Free Quote
+              <Button variant="cta" className="mt-2" asChild>
+                <a href="#quote">Free Quote</a>
               </Button>
             </nav>
           </div>
