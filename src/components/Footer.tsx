@@ -1,5 +1,7 @@
 import { Phone, Facebook, Instagram } from "lucide-react";
 import atpLogo from "@/assets/atp-logo.png";
+import { CALL_LINK, PHONE_DISPLAY } from "@/lib/contact";
+import { SERVICE_NAMES } from "@/data/services";
 
 const Footer = () => {
   return (
@@ -48,14 +50,10 @@ const Footer = () => {
           <div>
             <h4 className="font-heading font-bold text-lg mb-6">Our Services</h4>
             <ul className="space-y-3">
-              {[
-                "Full House Soft Washing",
-                "Gutter Cleanout",
-                "Sidewalk/Driveway Cleaning",
-              ].map((service) => (
-                <li key={service}>
-                  <a
-                    href="#services"
+               {SERVICE_NAMES.map((service) => (
+                 <li key={service}>
+                   <a
+                     href="#services"
                     className="text-primary-foreground/70 hover:text-primary-foreground transition-colors"
                   >
                     {service}
@@ -70,14 +68,14 @@ const Footer = () => {
             <h4 className="font-heading font-bold text-lg mb-6">Contact Us</h4>
             <ul className="space-y-4">
               <li className="flex items-center gap-3">
-                <Phone className="h-5 w-5 text-primary flex-shrink-0" />
-                <a
-                  href="tel:7178140704"
-                  className="text-primary-foreground/70 hover:text-primary-foreground transition-colors"
-                >
-                  717-814-0704
-                </a>
-              </li>
+                 <Phone className="h-5 w-5 text-primary flex-shrink-0" />
+                 <a
+                   href={CALL_LINK}
+                   className="text-primary-foreground/70 hover:text-primary-foreground transition-colors"
+                 >
+                   {PHONE_DISPLAY}
+                 </a>
+               </li>
               <li className="text-primary-foreground/70">
                 York Area, Pennsylvania
               </li>
@@ -114,9 +112,9 @@ const Footer = () => {
             <p className="text-primary-foreground/60 text-sm">
               © {new Date().getFullYear()} ATP Power Washing Solutions. All rights reserved.
             </p>
-            <p className="text-primary-foreground/60 text-sm">
-              York Area, PA • 717-814-0704
-            </p>
+             <p className="text-primary-foreground/60 text-sm">
+               York Area, PA • {PHONE_DISPLAY}
+             </p>
           </div>
         </div>
       </div>

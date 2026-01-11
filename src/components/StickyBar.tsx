@@ -1,8 +1,8 @@
 import { Phone, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { CALL_LINK, SMS_LINK } from "@/lib/contact";
 
 const StickyBar = () => {
-  const smsText = encodeURIComponent("Hi ATP, I want a free quote. Address: ____ Town: ____ Service: House soft wash / driveway / sidewalk. Best time: ____. Photos attached.");
 
   return (
     <>
@@ -15,13 +15,13 @@ const StickyBar = () => {
             </span>
             <div className="flex items-center gap-3">
               <Button variant="ghost" size="sm" className="text-primary-foreground hover:bg-primary-foreground/10" asChild>
-                <a href="tel:7178140704" className="flex items-center gap-2">
+                <a href={CALL_LINK} className="flex items-center gap-2">
                   <Phone className="h-4 w-4" />
                   Call
                 </a>
               </Button>
               <Button variant="ghost" size="sm" className="text-primary-foreground hover:bg-primary-foreground/10" asChild>
-                <a href={`sms:7178140704?body=${smsText}`} className="flex items-center gap-2">
+                <a href={SMS_LINK} className="flex items-center gap-2">
                   <MessageSquare className="h-4 w-4" />
                   Text
                 </a>
@@ -43,13 +43,13 @@ const StickyBar = () => {
             </span>
             <div className="flex items-center gap-2">
               <Button variant="ghost" size="sm" className="text-primary-foreground hover:bg-primary-foreground/10 px-2" asChild>
-                <a href="tel:7178140704" className="flex items-center gap-1">
+                <a href={CALL_LINK} className="flex items-center gap-1">
                   <Phone className="h-4 w-4" />
                   <span className="sr-only sm:not-sr-only">Call</span>
                 </a>
               </Button>
               <Button variant="ghost" size="sm" className="text-primary-foreground hover:bg-primary-foreground/10 px-2" asChild>
-                <a href={`sms:7178140704?body=${smsText}`} className="flex items-center gap-1">
+                <a href={SMS_LINK} className="flex items-center gap-1">
                   <MessageSquare className="h-4 w-4" />
                   <span className="sr-only sm:not-sr-only">Text</span>
                 </a>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import atpLogo from "@/assets/atp-logo.png";
+import { CALL_LINK, PHONE_DISPLAY } from "@/lib/contact";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -44,9 +45,9 @@ const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden md:flex items-center gap-4">
-            <a href="tel:7178140704" className="flex items-center gap-2 text-sm font-semibold text-foreground">
+            <a href={CALL_LINK} className="flex items-center gap-2 text-sm font-semibold text-foreground">
               <Phone className="h-4 w-4 text-primary" />
-              717-814-0704
+              {PHONE_DISPLAY}
             </a>
             <Button variant="cta" size="lg" asChild>
               <a href="#quote">Free Quote</a>
@@ -81,9 +82,9 @@ const Header = () => {
                   {link.label}
                 </a>
               ))}
-              <a href="tel:7178140704" className="flex items-center gap-2 text-sm font-semibold text-foreground">
+              <a href={CALL_LINK} className="flex items-center gap-2 text-sm font-semibold text-foreground">
                 <Phone className="h-4 w-4 text-primary" />
-                717-814-0704
+                {PHONE_DISPLAY}
               </a>
               <Button variant="cta" className="mt-2" asChild>
                 <a href="#quote">Free Quote</a>

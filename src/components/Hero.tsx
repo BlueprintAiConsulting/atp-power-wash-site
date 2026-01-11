@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Star, Phone, MessageSquare } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
+import { CALL_LINK, PHONE_DISPLAY, SMS_LINK } from "@/lib/contact";
 
 const Hero = () => {
-  const smsText = encodeURIComponent("Hi ATP, I want a free quote. Address: ____ Town: ____ Service: House soft wash / driveway / sidewalk. Best time: ____. Photos attached.");
 
   return (
     <section className="relative min-h-[90vh] flex items-center pt-20">
@@ -45,14 +45,14 @@ const Hero = () => {
             <Button variant="cta" size="xl" asChild>
               <a href="#quote">Free Quote</a>
             </Button>
-            <Button variant="heroOutline" size="xl" asChild>
-              <a href="tel:7178140704" className="flex items-center gap-2">
+             <Button variant="heroOutline" size="xl" asChild>
+              <a href={CALL_LINK} className="flex items-center gap-2">
                 <Phone className="h-5 w-5" />
-                Call 717-814-0704
+                Call {PHONE_DISPLAY}
               </a>
             </Button>
             <Button variant="heroOutline" size="xl" asChild>
-              <a href={`sms:7178140704?body=${smsText}`} className="flex items-center gap-2">
+              <a href={SMS_LINK} className="flex items-center gap-2">
                 <MessageSquare className="h-5 w-5" />
                 Text for Fastest Quote
               </a>
