@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, Facebook } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import atpLogo from "@/assets/atp-logo.png";
 
@@ -42,8 +42,16 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* CTA Button */}
           <div className="hidden md:flex items-center gap-4">
+            <a 
+              href="https://www.facebook.com/share/17n95D4n9h/?mibextid=wwXIfr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-9 h-9 rounded-full bg-muted flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+              aria-label="Facebook"
+            >
+              <Facebook className="h-4 w-4" />
+            </a>
             <a href="tel:7178140704" className="flex items-center gap-2 text-sm font-semibold text-foreground">
               <Phone className="h-4 w-4 text-primary" />
               717-814-0704
@@ -81,6 +89,15 @@ const Header = () => {
                   {link.label}
                 </a>
               ))}
+              <a 
+                href="https://www.facebook.com/share/17n95D4n9h/?mibextid=wwXIfr"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-sm font-semibold text-foreground"
+              >
+                <Facebook className="h-4 w-4 text-primary" />
+                Follow us on Facebook
+              </a>
               <a href="tel:7178140704" className="flex items-center gap-2 text-sm font-semibold text-foreground">
                 <Phone className="h-4 w-4 text-primary" />
                 717-814-0704
