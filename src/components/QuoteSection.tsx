@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { z } from "zod";
 
 const towns = [
   "Lancaster",
@@ -35,9 +36,41 @@ const services = [
 
 const QUOTE_TEXT = "Hi ATP, I want a free quote. Address: ____ Town: ____ Service: House soft wash / driveway / sidewalk. Best time: ____. Photos attached.";
 
+// Zod schema for form validation
+const quoteFormSchema = z.object({
+  name: z
+    .string()
+    .min(2, "Name must be at least 2 characters")
+    .max(100, "Name must be less than 100 characters")
+    .regex(/^[a-zA-Z\s'-]+$/, "Name can only contain letters, spaces, hyphens, and apostrophes"),
+  phone: z
+    .string()
+    .min(10, "Phone number must be at least 10 digits")
+    .max(20, "Phone number must be less than 20 characters")
+    .regex(/^[\d\s\-\(\)\+]+$/, "Please enter a valid phone number"),
+  address: z
+    .string()
+    .min(5, "Address must be at least 5 characters")
+    .max(200, "Address must be less than 200 characters"),
+  town: z
+    .string()
+    .min(1, "Please select a town"),
+  service: z
+    .string()
+    .min(1, "Please select a service"),
+  details: z
+    .string()
+    .max(1000, "Details must be less than 1000 characters")
+    .optional()
+    .default(""),
+});
+
+type QuoteFormData = z.infer<typeof quoteFormSchema>;
+
 const QuoteSection = () => {
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
+  const [errors, setErrors] = useState<Partial<Record<keyof QuoteFormData, string>>>({});
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -59,8 +92,36 @@ const QuoteSection = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const validateForm = (): boolean => {
+    const result = quoteFormSchema.safeParse(formData);
+    if (!result.success) {
+      const fieldErrors: Partial<Record<keyof QuoteFormData, string>> = {};
+      result.error.errors.forEach((error) => {
+        const field = error.path[0] as keyof QuoteFormData;
+        if (!fieldErrors[field]) {
+          fieldErrors[field] = error.message;
+        }
+      });
+      setErrors(fieldErrors);
+      return false;
+    }
+    setErrors({});
+    return true;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate form data
+    if (!validateForm()) {
+      toast({
+        title: "Please fix the errors",
+        description: "Check the form fields and try again.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     // TODO: Replace with your Formspree endpoint
     const formspreeEndpoint = "https://formspree.io/f/YOUR_FORM_ID";
     
@@ -86,6 +147,7 @@ const QuoteSection = () => {
           service: "",
           details: "",
         });
+        setErrors({});
       } else {
         throw new Error("Form submission failed");
       }
@@ -177,65 +239,87 @@ const QuoteSection = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              <Input
-                placeholder="Your Name"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                required
-                className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/60 focus:border-primary-foreground/40"
-              />
-              <Input
-                type="tel"
-                placeholder="Phone Number"
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                required
-                className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/60 focus:border-primary-foreground/40"
-              />
-              <Input
-                placeholder="Address or ZIP Code"
-                value={formData.address}
-                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                required
-                className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/60 focus:border-primary-foreground/40"
-              />
-              <Select
-                value={formData.town}
-                onValueChange={(value) => setFormData({ ...formData, town: value })}
-              >
-                <SelectTrigger className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground [&>span]:text-primary-foreground/60 [&>span]:data-[placeholder]:text-primary-foreground/60">
-                  <SelectValue placeholder="Select Town" />
-                </SelectTrigger>
-                <SelectContent>
-                  {towns.map((town) => (
-                    <SelectItem key={town} value={town}>
-                      {town}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Select
-                value={formData.service}
-                onValueChange={(value) => setFormData({ ...formData, service: value })}
-              >
-                <SelectTrigger className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground [&>span]:text-primary-foreground/60 [&>span]:data-[placeholder]:text-primary-foreground/60">
-                  <SelectValue placeholder="Select Service" />
-                </SelectTrigger>
-                <SelectContent>
-                  {services.map((service) => (
-                    <SelectItem key={service} value={service}>
-                      {service}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Textarea
-                placeholder="Additional Details (optional)"
-                value={formData.details}
-                onChange={(e) => setFormData({ ...formData, details: e.target.value })}
-                rows={3}
-                className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/60 focus:border-primary-foreground/40"
-              />
+              <div>
+                <Input
+                  placeholder="Your Name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  required
+                  maxLength={100}
+                  className={`bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/60 focus:border-primary-foreground/40 ${errors.name ? 'border-red-400' : ''}`}
+                />
+                {errors.name && <p className="text-red-300 text-xs mt-1">{errors.name}</p>}
+              </div>
+              <div>
+                <Input
+                  type="tel"
+                  placeholder="Phone Number"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  required
+                  maxLength={20}
+                  className={`bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/60 focus:border-primary-foreground/40 ${errors.phone ? 'border-red-400' : ''}`}
+                />
+                {errors.phone && <p className="text-red-300 text-xs mt-1">{errors.phone}</p>}
+              </div>
+              <div>
+                <Input
+                  placeholder="Address or ZIP Code"
+                  value={formData.address}
+                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                  required
+                  maxLength={200}
+                  className={`bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/60 focus:border-primary-foreground/40 ${errors.address ? 'border-red-400' : ''}`}
+                />
+                {errors.address && <p className="text-red-300 text-xs mt-1">{errors.address}</p>}
+              </div>
+              <div>
+                <Select
+                  value={formData.town}
+                  onValueChange={(value) => setFormData({ ...formData, town: value })}
+                >
+                  <SelectTrigger className={`bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground [&>span]:text-primary-foreground/60 [&>span]:data-[placeholder]:text-primary-foreground/60 ${errors.town ? 'border-red-400' : ''}`}>
+                    <SelectValue placeholder="Select Town" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {towns.map((town) => (
+                      <SelectItem key={town} value={town}>
+                        {town}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {errors.town && <p className="text-red-300 text-xs mt-1">{errors.town}</p>}
+              </div>
+              <div>
+                <Select
+                  value={formData.service}
+                  onValueChange={(value) => setFormData({ ...formData, service: value })}
+                >
+                  <SelectTrigger className={`bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground [&>span]:text-primary-foreground/60 [&>span]:data-[placeholder]:text-primary-foreground/60 ${errors.service ? 'border-red-400' : ''}`}>
+                    <SelectValue placeholder="Select Service" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {services.map((service) => (
+                      <SelectItem key={service} value={service}>
+                        {service}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {errors.service && <p className="text-red-300 text-xs mt-1">{errors.service}</p>}
+              </div>
+              <div>
+                <Textarea
+                  placeholder="Additional Details (optional)"
+                  value={formData.details}
+                  onChange={(e) => setFormData({ ...formData, details: e.target.value })}
+                  rows={3}
+                  maxLength={1000}
+                  className={`bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/60 focus:border-primary-foreground/40 ${errors.details ? 'border-red-400' : ''}`}
+                />
+                {errors.details && <p className="text-red-300 text-xs mt-1">{errors.details}</p>}
+              </div>
               <Button type="submit" variant="secondary" className="w-full" size="lg">
                 Submit Quote Request
               </Button>
