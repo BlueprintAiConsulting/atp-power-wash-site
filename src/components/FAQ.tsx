@@ -12,7 +12,7 @@ const faqs = [
   },
   {
     question: "How do I get the fastest quote?",
-    answer: "The fastest way to get a quote is to text us at 717-814-0704 with your address, town, the service you need, and a few photos if possible. We typically respond within minutes during business hours!",
+    answer: "The fastest way to get a quote is to text us at 717-814-0704 with your address, town, the service you need, and a few photos if possible. We typically respond within the same day!",
   },
   {
     question: "Do you need water access?",
