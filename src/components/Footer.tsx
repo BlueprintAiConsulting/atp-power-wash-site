@@ -84,10 +84,10 @@ const Footer = () => {
               <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-primary flex-shrink-0" />
                 <a
-                  href="mailto:ATP@atppowerwashingsolutions.com"
+                  href="mailto:ATP@atppowerwashing.com"
                   className="text-primary-foreground/70 hover:text-primary-foreground transition-colors"
                 >
-                  ATP@atppowerwashingsolutions.com
+                  ATP@atppowerwashing.com
                 </a>
               </li>
               <li className="text-primary-foreground/70">
@@ -108,7 +108,7 @@ const Footer = () => {
                 <Phone className="h-5 w-5" />
               </a>
               <a
-                href="mailto:ATP@atppowerwashingsolutions.com"
+                href="mailto:ATP@atppowerwashing.com"
                 className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary transition-colors"
                 aria-label="Email Us"
               >
