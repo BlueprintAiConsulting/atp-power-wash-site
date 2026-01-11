@@ -12,4 +12,3 @@ export const SERVICE_TOWNS = [
 ];
 
 export const QUOTE_TOWNS = [...SERVICE_TOWNS, "Other nearby town"];
-

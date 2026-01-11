@@ -23,4 +23,3 @@ export const SERVICE_CARDS = [
 export const SERVICE_NAMES = SERVICE_CARDS.map((service) => service.title);
 
 export const QUOTE_SERVICE_OPTIONS = [...SERVICE_NAMES, "Other"];
-

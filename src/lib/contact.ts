@@ -8,4 +8,3 @@ export const QUOTE_TEMPLATE =
   "Hi ATP, I want a free quote. Address: ____ Town: ____ Service: House soft wash / driveway / sidewalk. Best time: ____. Photos attached.";
 
 export const SMS_LINK = `sms:${PHONE_NUMBER}?body=${encodeURIComponent(QUOTE_TEMPLATE)}`;
-

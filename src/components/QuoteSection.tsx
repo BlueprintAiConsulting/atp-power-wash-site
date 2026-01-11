@@ -39,7 +39,7 @@ const QuoteSection = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Replace with your Formspree endpoint
+    // Requires VITE_FORMSPREE_ENDPOINT to be configured
     const formspreeEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT;
 
     if (!formspreeEndpoint) {
@@ -50,7 +50,6 @@ const QuoteSection = () => {
       });
       return;
     }
-    
     try {
       const response = await fetch(formspreeEndpoint, {
         method: "POST",
