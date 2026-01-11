@@ -1,9 +1,9 @@
-import { MapPin, Phone, Mail, Clock, Facebook, Instagram } from "lucide-react";
+import { Phone, Facebook, Instagram } from "lucide-react";
 import atpLogo from "@/assets/atp-logo.png";
 
 const Footer = () => {
   return (
-    <footer id="contact" className="bg-foreground text-primary-foreground">
+    <footer id="contact" className="bg-foreground text-primary-foreground pb-20 md:pb-0">
       <div className="container py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Logo & About */}
@@ -13,9 +13,12 @@ const Footer = () => {
               alt="ATP Power Washing Solutions"
               className="h-20 w-auto mb-6"
             />
+            <p className="text-primary-foreground/70 leading-relaxed mb-4">
+              <span className="font-bold text-brand-red">ATP Power Washing Solutions</span>
+            </p>
             <p className="text-primary-foreground/70 leading-relaxed">
-              Professional power washing services for residential and commercial properties 
-              throughout Pennsylvania.
+              York-area based, proudly serving South Central Pennsylvania with professional 
+              power washing services.
             </p>
           </div>
 
@@ -23,13 +26,18 @@ const Footer = () => {
           <div>
             <h4 className="font-heading font-bold text-lg mb-6">Quick Links</h4>
             <ul className="space-y-3">
-              {["Home", "Services", "About Us", "Contact"].map((link) => (
-                <li key={link}>
+              {[
+                { label: "Services", href: "#services" },
+                { label: "Service Areas", href: "#service-areas" },
+                { label: "FAQ", href: "#faq" },
+                { label: "Free Quote", href: "#quote" },
+              ].map((link) => (
+                <li key={link.label}>
                   <a
-                    href={`#${link.toLowerCase().replace(" ", "-")}`}
+                    href={link.href}
                     className="text-primary-foreground/70 hover:text-primary-foreground transition-colors"
                   >
-                    {link}
+                    {link.label}
                   </a>
                 </li>
               ))}
@@ -41,11 +49,9 @@ const Footer = () => {
             <h4 className="font-heading font-bold text-lg mb-6">Our Services</h4>
             <ul className="space-y-3">
               {[
-                "House Washing",
-                "Driveway Cleaning",
-                "Deck & Fence",
-                "Roof Cleaning",
-                "Commercial",
+                "Full House Soft Washing",
+                "Gutter Cleanout",
+                "Sidewalk/Driveway Cleaning",
               ].map((service) => (
                 <li key={service}>
                   <a
@@ -63,35 +69,20 @@ const Footer = () => {
           <div>
             <h4 className="font-heading font-bold text-lg mb-6">Contact Us</h4>
             <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <MapPin className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                <span className="text-primary-foreground/70">
-                  Serving All of Pennsylvania
-                </span>
-              </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-primary flex-shrink-0" />
                 <a
-                  href="tel:+1234567890"
+                  href="tel:7178140704"
                   className="text-primary-foreground/70 hover:text-primary-foreground transition-colors"
                 >
-                  (123) 456-7890
+                  717-814-0704
                 </a>
               </li>
-              <li className="flex items-center gap-3">
-                <Mail className="h-5 w-5 text-primary flex-shrink-0" />
-                <a
-                  href="mailto:info@atppowerwashing.com"
-                  className="text-primary-foreground/70 hover:text-primary-foreground transition-colors"
-                >
-                  info@atppowerwashing.com
-                </a>
+              <li className="text-primary-foreground/70">
+                York Area, Pennsylvania
               </li>
-              <li className="flex items-center gap-3">
-                <Clock className="h-5 w-5 text-primary flex-shrink-0" />
-                <span className="text-primary-foreground/70">
-                  Mon - Sat: 7AM - 7PM
-                </span>
+              <li className="text-primary-foreground/70">
+                Serving South Central PA
               </li>
             </ul>
 
@@ -123,14 +114,9 @@ const Footer = () => {
             <p className="text-primary-foreground/60 text-sm">
               © {new Date().getFullYear()} ATP Power Washing Solutions. All rights reserved.
             </p>
-            <div className="flex gap-6 text-sm">
-              <a href="#" className="text-primary-foreground/60 hover:text-primary-foreground transition-colors">
-                Privacy Policy
-              </a>
-              <a href="#" className="text-primary-foreground/60 hover:text-primary-foreground transition-colors">
-                Terms of Service
-              </a>
-            </div>
+            <p className="text-primary-foreground/60 text-sm">
+              York Area, PA • 717-814-0704
+            </p>
           </div>
         </div>
       </div>
