@@ -37,7 +37,7 @@ const Hero = () => {
 
           {/* Subheading */}
           <p className="text-lg md:text-xl text-primary-foreground/90 mb-8 max-w-xl animate-fade-in" style={{ animationDelay: "0.2s" }}>
-            York-area based. Serving South Central PA with fast quotes by text.
+            Applying The Pressure to the greater York/South Central Pennsylvania Region since 2024.
           </p>
 
           {/* CTA Buttons */}

@@ -55,15 +55,15 @@ const Services = () => {
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
               
-              {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+              {/* Gradient Overlay - stronger for better text readability */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20" />
               
               {/* Content */}
               <div className="absolute inset-0 flex flex-col justify-end p-6 lg:p-8">
-                <h3 className="font-heading font-bold text-2xl text-white mb-2">
+                <h3 className="font-heading font-bold text-2xl text-white mb-2 drop-shadow-lg [text-shadow:_0_2px_8px_rgb(0_0_0_/_80%)]">
                   {service.title}
                 </h3>
-                <p className="text-white/80 mb-4 leading-relaxed">
+                <p className="text-white mb-4 leading-relaxed drop-shadow-md [text-shadow:_0_1px_4px_rgb(0_0_0_/_70%)]">
                   {service.description}
                 </p>
                 <Button variant="cta" size="lg" className="w-full sm:w-auto" asChild>

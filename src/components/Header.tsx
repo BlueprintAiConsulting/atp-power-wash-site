@@ -22,7 +22,7 @@ const Header = () => {
             <img
               src={atpLogo}
               alt="ATP Power Washing Solutions"
-              className="h-14 w-auto"
+              className="h-[68px] w-auto"
             />
             <span className="hidden lg:block font-heading font-bold text-lg">
               <span className="text-brand-red">ATP Power Washing Solutions</span>
