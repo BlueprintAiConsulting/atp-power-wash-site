@@ -110,7 +110,7 @@
 
 @layer utilities {
   .text-gradient-brand {
-    @apply bg-gradient-to-r from-brand-blue to-brand-red bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-brand-red via-primary to-brand-blue bg-clip-text text-transparent;
   }
 
   .bg-hero-overlay {
