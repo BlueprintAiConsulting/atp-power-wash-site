@@ -61,6 +61,11 @@ export default {
           silver: "hsl(var(--brand-silver))",
         },
       },
+      fontSize: {
+        services: "2.4375rem",
+        "services-md": "2.925rem",
+        "services-lg": "3.9rem",
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",

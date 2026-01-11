@@ -30,7 +30,7 @@ const Services = () => {
           <span className="inline-block text-primary font-heading font-bold text-sm uppercase tracking-widest mb-4">
             Our Services
           </span>
-          <h2 className="text-[2.4375rem] md:text-[2.925rem] lg:text-[3.9rem] font-extrabold text-foreground mb-6">
+          <h2 className="text-services md:text-services-md lg:text-services-lg font-extrabold text-foreground mb-6">
             Complete Power Washing{" "}
             <span className="text-gradient-brand">Solutions</span>
           </h2>
