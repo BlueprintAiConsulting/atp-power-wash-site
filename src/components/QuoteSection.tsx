@@ -166,12 +166,12 @@ const QuoteSection = () => {
           </div>
 
           {/* Option B: Quote Form */}
-          <div className="bg-card rounded-2xl p-8 shadow-lg border border-border">
+          <div className="bg-gradient-to-br from-primary via-primary to-brand-blue-dark rounded-2xl p-8 text-primary-foreground shadow-blue">
             <div className="text-center mb-8">
-              <h3 className="font-heading font-bold text-2xl text-foreground mb-2">
+              <h3 className="font-heading font-bold text-2xl mb-2">
                 Request a Quote Online
               </h3>
-              <p className="text-muted-foreground">
+              <p className="text-primary-foreground/80">
                 Fill out the form and we'll get back to you
               </p>
             </div>
@@ -182,6 +182,7 @@ const QuoteSection = () => {
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 required
+                className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/60 focus:border-primary-foreground/40"
               />
               <Input
                 type="tel"
@@ -189,18 +190,20 @@ const QuoteSection = () => {
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 required
+                className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/60 focus:border-primary-foreground/40"
               />
               <Input
                 placeholder="Address or ZIP Code"
                 value={formData.address}
                 onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                 required
+                className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/60 focus:border-primary-foreground/40"
               />
               <Select
                 value={formData.town}
                 onValueChange={(value) => setFormData({ ...formData, town: value })}
               >
-                <SelectTrigger>
+                <SelectTrigger className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground [&>span]:text-primary-foreground/60 [&>span]:data-[placeholder]:text-primary-foreground/60">
                   <SelectValue placeholder="Select Town" />
                 </SelectTrigger>
                 <SelectContent>
@@ -215,7 +218,7 @@ const QuoteSection = () => {
                 value={formData.service}
                 onValueChange={(value) => setFormData({ ...formData, service: value })}
               >
-                <SelectTrigger>
+                <SelectTrigger className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground [&>span]:text-primary-foreground/60 [&>span]:data-[placeholder]:text-primary-foreground/60">
                   <SelectValue placeholder="Select Service" />
                 </SelectTrigger>
                 <SelectContent>
@@ -231,8 +234,9 @@ const QuoteSection = () => {
                 value={formData.details}
                 onChange={(e) => setFormData({ ...formData, details: e.target.value })}
                 rows={3}
+                className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/60 focus:border-primary-foreground/40"
               />
-              <Button type="submit" variant="cta" className="w-full" size="lg">
+              <Button type="submit" variant="secondary" className="w-full" size="lg">
                 Submit Quote Request
               </Button>
             </form>
