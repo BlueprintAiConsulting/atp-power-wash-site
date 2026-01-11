@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { MessageSquare } from "lucide-react";
 import actionVideo from "@/assets/atp-action-3.mp4";
+import { useSeamlessVideoLoop } from "@/hooks/use-seamless-video-loop";
 
 const ProofStrip = () => {
+  const videoRef = useSeamlessVideoLoop({ cutSeconds: 1.2 });
   const smsText = encodeURIComponent(
     "Hi ATP, I want a free quote. Address: ____ Town: ____ Service: House soft wash / driveway / sidewalk. Best time: ____. Photos attached."
   );
@@ -39,10 +41,10 @@ const ProofStrip = () => {
           <div className="order-2">
           <div className="rounded-2xl overflow-hidden border border-border shadow-lg">
               <video
+                ref={videoRef}
                 className="w-full h-auto"
                 autoPlay
                 muted
-                loop
                 playsInline
                 preload="auto"
               >
