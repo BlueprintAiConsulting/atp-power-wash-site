@@ -22,8 +22,8 @@ const ServiceAreas = () => {
           <span className="inline-block text-primary font-heading font-bold text-sm uppercase tracking-widest mb-4">
             Where We Work
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-foreground mb-6">
-            Service <span className="text-gradient-brand">Areas</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gradient-brand mb-6">
+            Service Areas
           </h2>
           <p className="text-muted-foreground text-lg">
             York-area based, proudly serving South Central Pennsylvania

@@ -106,9 +106,8 @@ const QuoteSection = () => {
           <span className="inline-block text-primary font-heading font-bold text-sm uppercase tracking-widest mb-4">
             Get Started
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-foreground mb-6">
-            Get Your Free{" "}
-            <span className="text-gradient-brand">Quote</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gradient-brand mb-6">
+            Get Your Free Quote
           </h2>
           <p className="text-muted-foreground text-lg">
             Choose the option that works best for you
