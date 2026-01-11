@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import StickyBar from "@/components/StickyBar";
+import ProofStrip from "@/components/ProofStrip";
 import Services from "@/components/Services";
 import ServiceAreas from "@/components/ServiceAreas";
 import FAQ from "@/components/FAQ";
@@ -14,6 +15,7 @@ const Index = () => {
       <StickyBar />
       <main>
         <Hero />
+        <ProofStrip />
         <Services />
         <ServiceAreas />
         <FAQ />
