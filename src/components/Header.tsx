@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Menu, X, Phone, Facebook } from "lucide-react";
+import { Menu, X, Phone, Facebook, Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import atpLogo from "@/assets/atp-logo.png";
 
@@ -52,6 +52,15 @@ const Header = () => {
             >
               <Facebook className="h-4 w-4" />
             </a>
+            <a 
+              href="https://www.instagram.com/atppowerwashingllc?igsh=MWhob2ZmaTVwZGFlaQ=="
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-9 h-9 rounded-full bg-muted flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+              aria-label="Instagram"
+            >
+              <Instagram className="h-4 w-4" />
+            </a>
             <a href="tel:7178140704" className="flex items-center gap-2 text-sm font-semibold text-foreground">
               <Phone className="h-4 w-4 text-primary" />
               717-814-0704
@@ -97,6 +106,15 @@ const Header = () => {
               >
                 <Facebook className="h-4 w-4 text-primary" />
                 Follow us on Facebook
+              </a>
+              <a 
+                href="https://www.instagram.com/atppowerwashingllc?igsh=MWhob2ZmaTVwZGFlaQ=="
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-sm font-semibold text-foreground"
+              >
+                <Instagram className="h-4 w-4 text-primary" />
+                Follow us on Instagram
               </a>
               <a href="tel:7178140704" className="flex items-center gap-2 text-sm font-semibold text-foreground">
                 <Phone className="h-4 w-4 text-primary" />
