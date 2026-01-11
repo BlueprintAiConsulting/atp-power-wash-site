@@ -115,7 +115,9 @@ const Footer = () => {
                 <Mail className="h-5 w-5" />
               </a>
               <a
-                href="#"
+                href="https://www.facebook.com/share/17n95D4n9h/?mibextid=wwXIfr"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary transition-colors"
                 aria-label="Facebook"
               >
