@@ -84,10 +84,10 @@ const Footer = () => {
               <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-primary flex-shrink-0" />
                 <a
-                  href="mailto:atp@atpprowashing.com"
+                  href="mailto:ATP@atppowerwashingsolutions.com"
                   className="text-primary-foreground/70 hover:text-primary-foreground transition-colors"
                 >
-                  atp@atpprowashing.com
+                  ATP@atppowerwashingsolutions.com
                 </a>
               </li>
               <li className="text-primary-foreground/70">
@@ -98,8 +98,22 @@ const Footer = () => {
               </li>
             </ul>
 
-            {/* Social Links */}
+            {/* Social & Contact Links */}
             <div className="flex gap-4 mt-6">
+              <a
+                href="tel:7178140704"
+                className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary transition-colors"
+                aria-label="Call Us"
+              >
+                <Phone className="h-5 w-5" />
+              </a>
+              <a
+                href="mailto:ATP@atppowerwashingsolutions.com"
+                className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary transition-colors"
+                aria-label="Email Us"
+              >
+                <Mail className="h-5 w-5" />
+              </a>
               <a
                 href="#"
                 className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary transition-colors"
