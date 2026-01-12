@@ -1,10 +1,17 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 
 export function useSeamlessVideoLoop(options: { cutSeconds?: number } = {}) {
-  const { cutSeconds = 1.2 } = options;
+  const { cutSeconds = 2.0 } = options; // More aggressive cut to avoid bad frame
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const endAtRef = useRef<number | null>(null);
+
+  const restartVideo = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.currentTime = 0;
+    void video.play().catch(() => {});
+  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -18,20 +25,22 @@ export function useSeamlessVideoLoop(options: { cutSeconds?: number } = {}) {
     computeEndAt();
     video.addEventListener("loadedmetadata", computeEndAt);
     video.addEventListener("durationchange", computeEndAt);
+    
+    // Backup: if video somehow reaches the end, restart immediately
+    video.addEventListener("ended", restartVideo);
 
     let raf = 0;
     const tick = () => {
       const endAt = endAtRef.current;
 
-      // Prevent reaching the very end of the file (where the bad frame appears on some browsers).
+      // Restart before reaching the bad frame
       if (
         endAt != null &&
         !video.paused &&
         !video.seeking &&
         video.currentTime >= endAt
       ) {
-        video.currentTime = 0;
-        void video.play().catch(() => {});
+        restartVideo();
       }
 
       raf = requestAnimationFrame(tick);
@@ -43,8 +52,9 @@ export function useSeamlessVideoLoop(options: { cutSeconds?: number } = {}) {
       cancelAnimationFrame(raf);
       video.removeEventListener("loadedmetadata", computeEndAt);
       video.removeEventListener("durationchange", computeEndAt);
+      video.removeEventListener("ended", restartVideo);
     };
-  }, [cutSeconds]);
+  }, [cutSeconds, restartVideo]);
 
   return videoRef;
 }
