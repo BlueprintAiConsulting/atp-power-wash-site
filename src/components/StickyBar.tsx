@@ -1,4 +1,4 @@
-import { Phone, MessageSquare } from "lucide-react";
+import { Phone, MessageSquare, Facebook, Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const StickyBar = () => {
@@ -9,24 +9,46 @@ const StickyBar = () => {
       {/* Desktop - Sticky Top Bar (below header) */}
       <div className="hidden md:block fixed top-20 left-0 right-0 z-40 bg-brand-navy border-b border-border">
         <div className="container">
-          <div className="flex items-center justify-between h-12">
-            <span className="text-primary-foreground font-semibold">
-              Get your free estimate
-            </span>
-            <div className="flex items-center gap-3">
-              <Button variant="ghost" size="sm" className="text-primary-foreground hover:bg-primary-foreground/10" asChild>
-                <a href="tel:7178140704" className="flex items-center gap-2">
-                  <Phone className="h-4 w-4" />
+          <div className="flex items-center justify-between h-10">
+            <div className="flex items-center gap-4">
+              <span className="text-primary-foreground font-semibold text-sm">
+                Get your free estimate
+              </span>
+              <div className="flex items-center gap-2">
+                <a 
+                  href="https://www.facebook.com/share/17n95D4n9h/?mibextid=wwXIfr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-7 h-7 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-colors"
+                  aria-label="Facebook"
+                >
+                  <Facebook className="h-3.5 w-3.5 text-primary-foreground" />
+                </a>
+                <a 
+                  href="https://www.instagram.com/atppowerwashingllc?igsh=MWhob2ZmaTVwZGFlaQ=="
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-7 h-7 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-colors"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="h-3.5 w-3.5 text-primary-foreground" />
+                </a>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="sm" className="text-primary-foreground hover:bg-primary-foreground/10 h-7 px-2 text-xs" asChild>
+                <a href="tel:7178140704" className="flex items-center gap-1.5">
+                  <Phone className="h-3.5 w-3.5" />
                   Call
                 </a>
               </Button>
-              <Button variant="ghost" size="sm" className="text-primary-foreground hover:bg-primary-foreground/10" asChild>
-                <a href={`sms:7178140704?body=${smsText}`} className="flex items-center gap-2">
-                  <MessageSquare className="h-4 w-4" />
+              <Button variant="ghost" size="sm" className="text-primary-foreground hover:bg-primary-foreground/10 h-7 px-2 text-xs" asChild>
+                <a href={`sms:7178140704?body=${smsText}`} className="flex items-center gap-1.5">
+                  <MessageSquare className="h-3.5 w-3.5" />
                   Text
                 </a>
               </Button>
-              <Button variant="cta" size="sm" asChild>
+              <Button variant="cta" size="sm" className="h-7 px-3 text-xs" asChild>
                 <a href="#quote">Free Quote</a>
               </Button>
             </div>
