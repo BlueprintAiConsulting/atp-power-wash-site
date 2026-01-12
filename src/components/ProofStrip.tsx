@@ -19,7 +19,7 @@ const ProofStrip = () => {
               Watch ATP in action
             </h2>
             <p className="text-lg text-muted-foreground mb-8">
-              Real work. Real results. Fast quotes by text.
+              Real work. Real results. Fast quotes.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button variant="cta" size="xl" asChild>
