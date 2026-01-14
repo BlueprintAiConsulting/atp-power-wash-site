@@ -120,6 +120,8 @@ interface QuoteRequest {
   town: string;
   service: string;
   details?: string;
+  // Honeypot field - should always be empty for real users
+  website?: string;
 }
 
 Deno.serve(async (req) => {
@@ -130,7 +132,6 @@ Deno.serve(async (req) => {
 
   // Only allow POST
   if (req.method !== "POST") {
-    console.log("Method not allowed:", req.method);
     return new Response(
       JSON.stringify({ success: false, error: "Method not allowed" }),
       {
@@ -143,7 +144,19 @@ Deno.serve(async (req) => {
   try {
     // Parse request body
     const body = await req.json() as QuoteRequest;
-    console.log("Received quote request for:", body.name);
+
+    // Honeypot check - if the hidden field is filled, it's likely a bot
+    if (body.website && body.website.trim() !== "") {
+      // Silently reject bot submissions with a fake success response
+      // This prevents bots from knowing they were detected
+      return new Response(
+        JSON.stringify({ success: true, id: "submitted" }),
+        {
+          status: 200,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
+      );
+    }
 
     // Server-side validation
     const errors: Record<string, string> = {};
@@ -168,7 +181,6 @@ Deno.serve(async (req) => {
 
     // Return validation errors if any
     if (Object.keys(errors).length > 0) {
-      console.log("Validation errors:", errors);
       return new Response(
         JSON.stringify({ success: false, errors }),
         {
@@ -201,7 +213,8 @@ Deno.serve(async (req) => {
       .single();
 
     if (error) {
-      console.error("Database error:", error);
+      // Log generic error without exposing database details
+      console.error("Quote submission failed");
       return new Response(
         JSON.stringify({ success: false, error: "Failed to save quote request" }),
         {
@@ -211,8 +224,6 @@ Deno.serve(async (req) => {
       );
     }
 
-    console.log("Quote request saved successfully:", data.id);
-
     return new Response(
       JSON.stringify({ success: true, id: data.id }),
       {
@@ -221,7 +232,8 @@ Deno.serve(async (req) => {
       }
     );
   } catch (error) {
-    console.error("Error processing quote request:", error);
+    // Log generic error without exposing internal details
+    console.error("Quote request processing error");
     return new Response(
       JSON.stringify({ success: false, error: "Internal server error" }),
       {
