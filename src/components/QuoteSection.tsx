@@ -124,36 +124,35 @@ const QuoteSection = () => {
     }
 
     try {
-      // Submit to Formspree for email notification
-      const formspreeResponse = await fetch("https://formspree.io/f/mlggeyow", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      // Submit via edge function with server-side validation
+      const { data, error } = await supabase.functions.invoke("submit-quote", {
+        body: {
           name: formData.name,
           phone: formData.phone,
           address: formData.address,
           town: formData.town,
           service: formData.service,
-          details: formData.details || "No additional details",
-          _subject: `New Quote Request from ${formData.name} - ${formData.service}`,
-        }),
+          details: formData.details || undefined,
+        },
       });
 
-      if (!formspreeResponse.ok) throw new Error("Formspree submission failed");
+      if (error) {
+        throw new Error("Failed to submit quote request");
+      }
 
-      // Also save to database for records
-      await supabase
-        .from("quote_requests")
-        .insert({
-          name: formData.name,
-          phone: formData.phone,
-          address: formData.address,
-          town: formData.town,
-          service: formData.service,
-          details: formData.details || null,
-        });
+      if (!data.success) {
+        // Handle server-side validation errors
+        if (data.errors) {
+          setErrors(data.errors);
+          toast({
+            title: "Please fix the errors",
+            description: "Check the form fields and try again.",
+            variant: "destructive",
+          });
+          return;
+        }
+        throw new Error(data.error || "Submission failed");
+      }
 
       toast({
         title: "Quote Request Sent!",
