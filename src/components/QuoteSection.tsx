@@ -124,7 +124,27 @@ const QuoteSection = () => {
     }
 
     try {
-      const { error } = await supabase
+      // Submit to Formspree for email notification
+      const formspreeResponse = await fetch("https://formspree.io/f/YOUR_FORMSPREE_ID", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          address: formData.address,
+          town: formData.town,
+          service: formData.service,
+          details: formData.details || "No additional details",
+          _subject: `New Quote Request from ${formData.name} - ${formData.service}`,
+        }),
+      });
+
+      if (!formspreeResponse.ok) throw new Error("Formspree submission failed");
+
+      // Also save to database for records
+      await supabase
         .from("quote_requests")
         .insert({
           name: formData.name,
@@ -134,8 +154,6 @@ const QuoteSection = () => {
           service: formData.service,
           details: formData.details || null,
         });
-
-      if (error) throw error;
 
       toast({
         title: "Quote Request Sent!",
