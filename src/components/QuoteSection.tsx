@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
-import { supabase } from "@/integrations/supabase/client";
 
 const towns = [
   "Lancaster",
@@ -126,9 +125,13 @@ const QuoteSection = () => {
     }
 
     try {
-      // Submit via edge function with server-side validation
-      const { data, error } = await supabase.functions.invoke("submit-quote", {
-        body: {
+      // Submit to Formspree
+      const response = await fetch("https://formspree.io/f/xykkzekl", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
           address: formData.address,
@@ -136,26 +139,12 @@ const QuoteSection = () => {
           service: formData.service,
           details: formData.details || undefined,
           // Honeypot field - should be empty for real users
-          website: formData.website,
-        },
+          _gotcha: formData.website,
+        }),
       });
 
-      if (error) {
+      if (!response.ok) {
         throw new Error("Failed to submit quote request");
-      }
-
-      if (!data.success) {
-        // Handle server-side validation errors
-        if (data.errors) {
-          setErrors(data.errors);
-          toast({
-            title: "Please fix the errors",
-            description: "Check the form fields and try again.",
-            variant: "destructive",
-          });
-          return;
-        }
-        throw new Error(data.error || "Submission failed");
       }
 
       toast({
