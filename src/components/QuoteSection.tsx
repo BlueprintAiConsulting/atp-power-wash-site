@@ -79,6 +79,8 @@ const QuoteSection = () => {
     town: "",
     service: "",
     details: "",
+    // Honeypot field for bot protection - invisible to real users
+    website: "",
   });
 
   const smsText = encodeURIComponent(QUOTE_TEXT);
@@ -133,6 +135,8 @@ const QuoteSection = () => {
           town: formData.town,
           service: formData.service,
           details: formData.details || undefined,
+          // Honeypot field - should be empty for real users
+          website: formData.website,
         },
       });
 
@@ -165,6 +169,7 @@ const QuoteSection = () => {
         town: "",
         service: "",
         details: "",
+        website: "",
       });
       setErrors({});
     } catch (error) {
@@ -256,6 +261,17 @@ const QuoteSection = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Honeypot field - hidden from real users, bots will fill it */}
+              <div className="absolute -left-[9999px] opacity-0 h-0 w-0 overflow-hidden" aria-hidden="true">
+                <Input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={formData.website}
+                  onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                />
+              </div>
               <div>
                 <Input
                   placeholder="Your Name"
