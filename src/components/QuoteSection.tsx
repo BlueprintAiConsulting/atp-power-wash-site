@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Phone, MessageSquare, Copy, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 
 const towns = [
   "Lancaster",
@@ -71,6 +72,9 @@ const QuoteSection = () => {
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof QuoteFormData, string>>>({});
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const turnstileRef = useRef<TurnstileInstance>(null);
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -83,6 +87,7 @@ const QuoteSection = () => {
   });
 
   const smsText = encodeURIComponent(QUOTE_TEXT);
+  const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY;
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(QUOTE_TEXT);
@@ -124,6 +129,18 @@ const QuoteSection = () => {
       return;
     }
 
+    // Check Turnstile token
+    if (!turnstileToken) {
+      toast({
+        title: "Verification required",
+        description: "Please complete the security check.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
     try {
       // Submit to Formspree
       const response = await fetch("https://formspree.io/f/xykkzekl", {
@@ -140,6 +157,8 @@ const QuoteSection = () => {
           details: formData.details || undefined,
           // Honeypot field - should be empty for real users
           _gotcha: formData.website,
+          // Include Turnstile token for potential server-side verification
+          "cf-turnstile-response": turnstileToken,
         }),
       });
 
@@ -161,6 +180,9 @@ const QuoteSection = () => {
         website: "",
       });
       setErrors({});
+      setTurnstileToken(null);
+      // Reset Turnstile widget for next submission
+      turnstileRef.current?.reset();
     } catch (error) {
       console.error("Error submitting quote:", error);
       toast({
@@ -168,6 +190,11 @@ const QuoteSection = () => {
         description: "Please try calling or texting us instead.",
         variant: "destructive",
       });
+      // Reset Turnstile on error so user can try again
+      turnstileRef.current?.reset();
+      setTurnstileToken(null);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -340,10 +367,40 @@ const QuoteSection = () => {
                   maxLength={1000}
                   className={`bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/60 focus:border-primary-foreground/40 ${errors.details ? 'border-red-400' : ''}`}
                 />
-                {errors.details && <p className="text-red-300 text-xs mt-1">{errors.details}</p>}
+              {errors.details && <p className="text-red-300 text-xs mt-1">{errors.details}</p>}
               </div>
-              <Button type="submit" variant="secondary" className="w-full" size="lg">
-                Submit Quote Request
+              
+              {/* Cloudflare Turnstile Widget */}
+              {turnstileSiteKey && (
+                <div className="flex justify-center">
+                  <Turnstile
+                    ref={turnstileRef}
+                    siteKey={turnstileSiteKey}
+                    onSuccess={(token) => setTurnstileToken(token)}
+                    onError={() => {
+                      setTurnstileToken(null);
+                      toast({
+                        title: "Verification failed",
+                        description: "Please try again.",
+                        variant: "destructive",
+                      });
+                    }}
+                    onExpire={() => setTurnstileToken(null)}
+                    options={{
+                      theme: "dark",
+                    }}
+                  />
+                </div>
+              )}
+              
+              <Button 
+                type="submit" 
+                variant="secondary" 
+                className="w-full" 
+                size="lg"
+                disabled={isSubmitting || !turnstileToken}
+              >
+                {isSubmitting ? "Submitting..." : "Submit Quote Request"}
               </Button>
             </form>
           </div>
