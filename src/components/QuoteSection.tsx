@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Phone, MessageSquare, Copy, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,8 +12,6 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
-import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
-import { supabase } from "@/integrations/supabase/client";
 
 const towns = [
   "Lancaster",
@@ -73,11 +71,7 @@ const QuoteSection = () => {
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof QuoteFormData, string>>>({});
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
-  const [turnstileSiteKey, setTurnstileSiteKey] = useState<string | null>(null);
-  const [turnstileKeyLoading, setTurnstileKeyLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const turnstileRef = useRef<TurnstileInstance>(null);
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -90,39 +84,6 @@ const QuoteSection = () => {
   });
 
   const smsText = encodeURIComponent(QUOTE_TEXT);
-
-  const hasTurnstile = Boolean(turnstileSiteKey);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    const loadPublicConfig = async () => {
-      try {
-        const { data, error } = await supabase.functions.invoke("public-config", {
-          body: {},
-        });
-
-        if (cancelled) return;
-        if (error) throw error;
-
-        const key = (data as { turnstileSiteKey?: unknown } | null)?.turnstileSiteKey;
-        const normalized =
-          typeof key === "string" && key.trim().length > 0 ? key.trim() : null;
-
-        setTurnstileSiteKey(normalized);
-      } catch {
-        if (!cancelled) setTurnstileSiteKey(null);
-      } finally {
-        if (!cancelled) setTurnstileKeyLoading(false);
-      }
-    };
-
-    loadPublicConfig();
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(QUOTE_TEXT);
@@ -164,25 +125,6 @@ const QuoteSection = () => {
       return;
     }
 
-    // Require Turnstile once configured (prevents silent bypass)
-    if (turnstileKeyLoading) {
-      toast({
-        title: "Verification loading",
-        description: "Please wait a moment for the security check to load.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (!hasTurnstile || !turnstileToken) {
-      toast({
-        title: "Verification required",
-        description: "Please complete the security check.",
-        variant: "destructive",
-      });
-      return;
-    }
-
     setIsSubmitting(true);
 
     try {
@@ -201,8 +143,6 @@ const QuoteSection = () => {
           details: formData.details || undefined,
           // Honeypot field - should be empty for real users
           _gotcha: formData.website,
-          // Include Turnstile token for potential server-side verification
-          "cf-turnstile-response": turnstileToken,
         }),
       });
 
@@ -224,9 +164,6 @@ const QuoteSection = () => {
         website: "",
       });
       setErrors({});
-      setTurnstileToken(null);
-      // Reset Turnstile widget for next submission
-      turnstileRef.current?.reset();
     } catch (error) {
       console.error("Error submitting quote:", error);
       toast({
@@ -234,9 +171,6 @@ const QuoteSection = () => {
         description: "Please try calling or texting us instead.",
         variant: "destructive",
       });
-      // Reset Turnstile on error so user can try again
-      turnstileRef.current?.reset();
-      setTurnstileToken(null);
     } finally {
       setIsSubmitting(false);
     }
@@ -413,47 +347,12 @@ const QuoteSection = () => {
                 />
               {errors.details && <p className="text-red-300 text-xs mt-1">{errors.details}</p>}
               </div>
-              
-              {/* Cloudflare Turnstile Widget */}
-              {turnstileKeyLoading ? (
-                <p className="text-primary-foreground/60 text-xs text-center">
-                  Loading security verification...
-                </p>
-              ) : hasTurnstile ? (
-                <div className="flex justify-center">
-                  <Turnstile
-                    ref={turnstileRef}
-                    siteKey={turnstileSiteKey}
-                    onSuccess={(token) => setTurnstileToken(token)}
-                    onError={() => {
-                      setTurnstileToken(null);
-                      toast({
-                        title: "Verification failed",
-                        description: "Please try again.",
-                        variant: "destructive",
-                      });
-                    }}
-                    onExpire={() => setTurnstileToken(null)}
-                    options={{ theme: "dark" }}
-                  />
-                </div>
-              ) : (
-                <p className="text-primary-foreground/60 text-xs text-center">
-                  Security verification unavailable. Please refresh.
-                </p>
-              )}
-
               <Button
                 type="submit"
                 variant="secondary"
                 className="w-full"
                 size="lg"
-                disabled={
-                  isSubmitting ||
-                  turnstileKeyLoading ||
-                  !hasTurnstile ||
-                  (hasTurnstile && !turnstileToken)
-                }
+                disabled={isSubmitting}
               >
                 {isSubmitting ? "Submitting..." : "Submit Quote Request"}
               </Button>
