@@ -68,6 +68,9 @@ const quoteFormSchema = z.object({
 
 type QuoteFormData = z.infer<typeof quoteFormSchema>;
 
+// Get Turnstile site key from environment
+const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY;
+
 const QuoteSection = () => {
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
@@ -87,7 +90,9 @@ const QuoteSection = () => {
   });
 
   const smsText = encodeURIComponent(QUOTE_TEXT);
-  const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY;
+  
+  // Check if Turnstile is configured
+  const hasTurnstile = Boolean(TURNSTILE_SITE_KEY);
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(QUOTE_TEXT);
@@ -129,8 +134,8 @@ const QuoteSection = () => {
       return;
     }
 
-    // Check Turnstile token
-    if (!turnstileToken) {
+    // Check Turnstile token if Turnstile is configured
+    if (hasTurnstile && !turnstileToken) {
       toast({
         title: "Verification required",
         description: "Please complete the security check.",
@@ -371,11 +376,11 @@ const QuoteSection = () => {
               </div>
               
               {/* Cloudflare Turnstile Widget */}
-              {turnstileSiteKey && (
+              {hasTurnstile ? (
                 <div className="flex justify-center">
                   <Turnstile
                     ref={turnstileRef}
-                    siteKey={turnstileSiteKey}
+                    siteKey={TURNSTILE_SITE_KEY}
                     onSuccess={(token) => setTurnstileToken(token)}
                     onError={() => {
                       setTurnstileToken(null);
@@ -391,6 +396,10 @@ const QuoteSection = () => {
                     }}
                   />
                 </div>
+              ) : (
+                <p className="text-primary-foreground/60 text-xs text-center">
+                  Security verification loading...
+                </p>
               )}
               
               <Button 
@@ -398,7 +407,7 @@ const QuoteSection = () => {
                 variant="secondary" 
                 className="w-full" 
                 size="lg"
-                disabled={isSubmitting || !turnstileToken}
+                disabled={isSubmitting || (hasTurnstile && !turnstileToken)}
               >
                 {isSubmitting ? "Submitting..." : "Submit Quote Request"}
               </Button>
