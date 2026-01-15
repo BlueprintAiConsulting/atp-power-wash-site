@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Phone, MessageSquare, Copy, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +13,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
+import { supabase } from "@/integrations/supabase/client";
 
 const towns = [
   "Lancaster",
@@ -68,14 +69,13 @@ const quoteFormSchema = z.object({
 
 type QuoteFormData = z.infer<typeof quoteFormSchema>;
 
-// Get Turnstile site key from environment
-const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY;
-
 const QuoteSection = () => {
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof QuoteFormData, string>>>({});
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [turnstileSiteKey, setTurnstileSiteKey] = useState<string | null>(null);
+  const [turnstileKeyLoading, setTurnstileKeyLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const turnstileRef = useRef<TurnstileInstance>(null);
   const [formData, setFormData] = useState({
@@ -90,9 +90,39 @@ const QuoteSection = () => {
   });
 
   const smsText = encodeURIComponent(QUOTE_TEXT);
-  
-  // Check if Turnstile is configured
-  const hasTurnstile = Boolean(TURNSTILE_SITE_KEY);
+
+  const hasTurnstile = Boolean(turnstileSiteKey);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadPublicConfig = async () => {
+      try {
+        const { data, error } = await supabase.functions.invoke("public-config", {
+          body: {},
+        });
+
+        if (cancelled) return;
+        if (error) throw error;
+
+        const key = (data as { turnstileSiteKey?: unknown } | null)?.turnstileSiteKey;
+        const normalized =
+          typeof key === "string" && key.trim().length > 0 ? key.trim() : null;
+
+        setTurnstileSiteKey(normalized);
+      } catch {
+        if (!cancelled) setTurnstileSiteKey(null);
+      } finally {
+        if (!cancelled) setTurnstileKeyLoading(false);
+      }
+    };
+
+    loadPublicConfig();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(QUOTE_TEXT);
@@ -134,8 +164,17 @@ const QuoteSection = () => {
       return;
     }
 
-    // Check Turnstile token if Turnstile is configured
-    if (hasTurnstile && !turnstileToken) {
+    // Require Turnstile once configured (prevents silent bypass)
+    if (turnstileKeyLoading) {
+      toast({
+        title: "Verification loading",
+        description: "Please wait a moment for the security check to load.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!hasTurnstile || !turnstileToken) {
       toast({
         title: "Verification required",
         description: "Please complete the security check.",
@@ -376,11 +415,15 @@ const QuoteSection = () => {
               </div>
               
               {/* Cloudflare Turnstile Widget */}
-              {hasTurnstile ? (
+              {turnstileKeyLoading ? (
+                <p className="text-primary-foreground/60 text-xs text-center">
+                  Loading security verification...
+                </p>
+              ) : hasTurnstile ? (
                 <div className="flex justify-center">
                   <Turnstile
                     ref={turnstileRef}
-                    siteKey={TURNSTILE_SITE_KEY}
+                    siteKey={turnstileSiteKey}
                     onSuccess={(token) => setTurnstileToken(token)}
                     onError={() => {
                       setTurnstileToken(null);
@@ -391,23 +434,26 @@ const QuoteSection = () => {
                       });
                     }}
                     onExpire={() => setTurnstileToken(null)}
-                    options={{
-                      theme: "dark",
-                    }}
+                    options={{ theme: "dark" }}
                   />
                 </div>
               ) : (
                 <p className="text-primary-foreground/60 text-xs text-center">
-                  Security verification loading...
+                  Security verification unavailable. Please refresh.
                 </p>
               )}
-              
-              <Button 
-                type="submit" 
-                variant="secondary" 
-                className="w-full" 
+
+              <Button
+                type="submit"
+                variant="secondary"
+                className="w-full"
                 size="lg"
-                disabled={isSubmitting || (hasTurnstile && !turnstileToken)}
+                disabled={
+                  isSubmitting ||
+                  turnstileKeyLoading ||
+                  !hasTurnstile ||
+                  (hasTurnstile && !turnstileToken)
+                }
               >
                 {isSubmitting ? "Submitting..." : "Submit Quote Request"}
               </Button>
