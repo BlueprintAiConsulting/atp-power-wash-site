@@ -47,14 +47,14 @@ const Hero = () => {
             </Button>
             <div className="flex gap-2 sm:gap-4">
               <Button variant="heroOutline" size="xl" className="flex-1 sm:flex-none px-4 sm:px-6" asChild>
-                <a href="tel:7178140704" className="flex items-center justify-center gap-2">
+                <a href="tel:7174673620" className="flex items-center justify-center gap-2">
                   <Phone className="h-5 w-5" />
                   <span className="hidden xs:inline">Call</span>
                   <span className="xs:hidden">Call</span>
                 </a>
               </Button>
               <Button variant="heroOutline" size="xl" className="flex-1 sm:flex-none px-4 sm:px-6" asChild>
-                <a href={`sms:7178140704?body=${smsText}`} className="flex items-center justify-center gap-2">
+                <a href={`sms:7174673620?body=${smsText}`} className="flex items-center justify-center gap-2">
                   <MessageSquare className="h-5 w-5" />
                   <span className="hidden sm:inline">Text for Quote</span>
                   <span className="sm:hidden">Text</span>

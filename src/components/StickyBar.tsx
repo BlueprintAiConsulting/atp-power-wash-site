@@ -37,13 +37,13 @@ const StickyBar = () => {
             </div>
             <div className="flex items-center gap-2">
               <Button variant="ghost" size="sm" className="text-primary-foreground hover:bg-primary-foreground/10 h-7 px-2 text-xs" asChild>
-                <a href="tel:7178140704" className="flex items-center gap-1.5">
+                <a href="tel:7174673620" className="flex items-center gap-1.5">
                   <Phone className="h-3.5 w-3.5" />
                   Call
                 </a>
               </Button>
               <Button variant="ghost" size="sm" className="text-primary-foreground hover:bg-primary-foreground/10 h-7 px-2 text-xs" asChild>
-                <a href={`sms:7178140704?body=${smsText}`} className="flex items-center gap-1.5">
+                <a href={`sms:7174673620?body=${smsText}`} className="flex items-center gap-1.5">
                   <MessageSquare className="h-3.5 w-3.5" />
                   Text
                 </a>
@@ -60,14 +60,14 @@ const StickyBar = () => {
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-brand-navy border-t border-border pb-safe">
         <div className="grid grid-cols-3 h-16">
           <a 
-            href="tel:7178140704" 
+            href="tel:7174673620" 
             className="flex flex-col items-center justify-center gap-1 text-primary-foreground hover:bg-primary-foreground/10 active:bg-primary-foreground/20 transition-colors"
           >
             <Phone className="h-5 w-5" />
             <span className="text-xs font-medium">Call</span>
           </a>
           <a 
-            href={`sms:7178140704?body=${smsText}`}
+            href={`sms:7174673620?body=${smsText}`}
             className="flex flex-col items-center justify-center gap-1 text-primary-foreground hover:bg-primary-foreground/10 active:bg-primary-foreground/20 transition-colors"
           >
             <MessageSquare className="h-5 w-5" />

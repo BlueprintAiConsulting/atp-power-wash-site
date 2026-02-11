@@ -24,7 +24,7 @@ const ProofStrip = () => {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button variant="cta" size="xl" asChild>
                 <a
-                  href={`sms:+17178140704?body=${smsText}`}
+                  href={`sms:+17174673620?body=${smsText}`}
                   className="flex items-center gap-2"
                 >
                   <MessageSquare className="h-5 w-5" />
