@@ -61,9 +61,9 @@ const Header = () => {
             >
               <Instagram className="h-4 w-4" />
             </a>
-            <a href="tel:7178140704" className="flex items-center gap-2 text-sm font-semibold text-foreground">
+            <a href="tel:7174673620" className="flex items-center gap-2 text-sm font-semibold text-foreground">
               <Phone className="h-4 w-4 text-primary" />
-              717-814-0704
+              717-467-3620
             </a>
             <Button variant="cta" size="lg" asChild>
               <a href="#quote">Free Quote</a>
@@ -116,9 +116,9 @@ const Header = () => {
                 <Instagram className="h-4 w-4 text-primary" />
                 Follow us on Instagram
               </a>
-              <a href="tel:7178140704" className="flex items-center gap-2 text-sm font-semibold text-foreground">
+              <a href="tel:7174673620" className="flex items-center gap-2 text-sm font-semibold text-foreground">
                 <Phone className="h-4 w-4 text-primary" />
-                717-814-0704
+                717-467-3620
               </a>
               <Button variant="cta" className="mt-2" asChild>
                 <a href="#quote">Free Quote</a>

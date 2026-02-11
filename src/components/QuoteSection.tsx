@@ -229,15 +229,15 @@ const QuoteSection = () => {
 
             <div className="space-y-3">
               <Button variant="cta" className="w-full" size="lg" asChild>
-                <a href={`sms:7178140704?body=${smsText}`} className="flex items-center justify-center gap-2">
+                <a href={`sms:7174673620?body=${smsText}`} className="flex items-center justify-center gap-2">
                   <MessageSquare className="h-5 w-5" />
-                  Text 717-814-0704
+                  Text 717-467-3620
                 </a>
               </Button>
               <Button variant="heroOutline" className="w-full" size="lg" asChild>
-                <a href="tel:7178140704" className="flex items-center justify-center gap-2">
+                <a href="tel:7174673620" className="flex items-center justify-center gap-2">
                   <Phone className="h-5 w-5" />
-                  Call 717-814-0704
+                  Call 717-467-3620
                 </a>
               </Button>
             </div>
