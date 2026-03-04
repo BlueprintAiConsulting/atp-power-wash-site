@@ -31,6 +31,8 @@ const services = [
   "Full House Soft Washing",
   "Gutter Cleanout",
   "Sidewalk/Driveway Cleaning",
+  "Deck Cleaning",
+  "Porch Cleaning",
   "Other",
 ];
 
