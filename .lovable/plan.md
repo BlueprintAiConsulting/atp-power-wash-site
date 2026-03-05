@@ -1,24 +1,17 @@
 
 
-## Fix: Open Graph / iMessage Link Preview Image
+## Plan: Create OG Image from Uploaded Photo + ATP Logo
 
-**Problem:** The `og:image` currently points to `https://lovable.dev/opengraph-image-p98pqg.png` — a Lovable placeholder that is likely not the standard 1200×630px aspect ratio, causing an elongated preview in iMessage.
+**Goal:** Replace the current generated OG image with a composite using the uploaded house photo and the existing ATP logo, sized at 1200×630px for proper iMessage previews.
 
-**Solution:** Create a proper Open Graph image at the standard **1200×630px** dimensions and update the meta tags.
+### Steps
 
-### Approach
+1. **Copy the uploaded house photo** into the project as a source asset.
 
-1. **Generate an OG image** (`public/og-image.png`) at 1200×630px using the existing hero background (`hero-bg.jpg`) with the ATP logo overlaid and brand text. This will be done as a static asset.
+2. **Use AI image generation** to composite the image at 1200×630px — the uploaded house photo as the background with the ATP logo (from `src/assets/atp-logo.png` or `src/assets/atp-logo-circle.jpeg`) overlaid, likely in a corner or center-top position with brand text.
 
-2. **Update `index.html`** meta tags:
-   - Change `og:image` to point to the absolute published URL: `https://atp-shine-layout.lovable.app/og-image.png`
-   - Add `og:image:width` (1200) and `og:image:height` (630) meta tags so platforms know the dimensions upfront
-   - Update `twitter:image` to match
+3. **Save as `public/og-image.png`** — replacing the current placeholder OG image. No changes to `index.html` needed since the meta tags already point to this file.
 
-**Alternative:** If you have a specific marketing image you'd like used for link previews, you can upload it (1200×630px recommended) and I'll use that instead. Otherwise I'll compose one from your existing hero background and logo.
-
-### Changes
-
-- **`public/og-image.png`** — new 1200×630 composite image
-- **`index.html`** — update `og:image`, `twitter:image` URLs and add dimension hints
+### Files Changed
+- **`public/og-image.png`** — replaced with new composite image
 
