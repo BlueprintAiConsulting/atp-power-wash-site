@@ -1,17 +1,15 @@
 
 
-## Plan: Create OG Image from Uploaded Photo + ATP Logo
+## Plan: Restore OG Image to ATP Logo on Gray Background
 
-**Goal:** Replace the current generated OG image with a composite using the uploaded house photo and the existing ATP logo, sized at 1200×630px for proper iMessage previews.
+The uploaded screenshot shows the previous iMessage preview: the ATP logo centered on a clean gray/silver background. We need to restore that exact look.
 
 ### Steps
 
-1. **Copy the uploaded house photo** into the project as a source asset.
+1. **Copy the uploaded image** (`user-uploads://IMG_2401.jpeg`) to `public/og-image.png`, replacing the current one. This image already shows the ATP logo centered on the gray background — exactly what the client wants.
 
-2. **Use AI image generation** to composite the image at 1200×630px — the uploaded house photo as the background with the ATP logo (from `src/assets/atp-logo.png` or `src/assets/atp-logo-circle.jpeg`) overlaid, likely in a corner or center-top position with brand text.
-
-3. **Save as `public/og-image.png`** — replacing the current placeholder OG image. No changes to `index.html` needed since the meta tags already point to this file.
+2. **No changes to `index.html`** — the meta tags already point to `/og-image.png` with correct 1200×630 dimensions.
 
 ### Files Changed
-- **`public/og-image.png`** — replaced with new composite image
+- **`public/og-image.png`** — replaced with the uploaded ATP logo image
 
