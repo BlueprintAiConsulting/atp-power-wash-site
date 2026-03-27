@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { useSeamlessVideoLoop } from "@/hooks/use-seamless-video-loop";
+import beforeAfterVideo from "@/assets/before-after-wash.mp4";
 import serviceHouseWash from "@/assets/service-house-wash.jpg";
 import serviceGutter from "@/assets/service-gutter.jpg";
 import serviceSidewalk from "@/assets/service-sidewalk.jpg";
