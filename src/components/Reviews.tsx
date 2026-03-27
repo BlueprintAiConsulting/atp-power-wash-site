@@ -1,18 +1,6 @@
 import { Star } from "lucide-react";
-import { useEffect } from "react";
 
 const Reviews = () => {
-  useEffect(() => {
-    // Load Elfsight script for Google Reviews widget
-    const existingScript = document.querySelector('script[src="https://static.elfsight.com/platform/platform.js"]');
-    if (!existingScript) {
-      const script = document.createElement("script");
-      script.src = "https://static.elfsight.com/platform/platform.js";
-      script.async = true;
-      document.body.appendChild(script);
-    }
-  }, []);
-
   return (
     <section id="reviews" className="py-16 md:py-24 bg-muted/30">
       <div className="container mx-auto px-4">
@@ -32,7 +20,7 @@ const Reviews = () => {
 
         {/* Reviews Grid */}
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {/* Google Reviews */}
+          {/* Google Review */}
           <div className="bg-card rounded-xl shadow-md p-6 border border-border">
             <div className="flex items-center gap-3 mb-6">
               <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none">
@@ -43,14 +31,32 @@ const Reviews = () => {
               </svg>
               <h3 className="text-xl font-bold text-foreground">Google Reviews</h3>
             </div>
-            {/* 
-              TO ACTIVATE: 
-              1. Go to elfsight.com and create a free account
-              2. Create a "Google Reviews" widget for "ATP Power Washing Solutions"
-              3. Copy the widget ID and replace the data-elfsight-app-lazy below
-            */}
-            <div className="elfsight-app-lazy" data-elfsight-app-lazy></div>
-            <div className="mt-4 text-center">
+
+            {/* Review Card */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold text-lg">
+                  U
+                </div>
+                <div>
+                  <p className="font-semibold text-foreground">Unique C</p>
+                  <p className="text-xs text-muted-foreground">5 reviews</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                ))}
+                <span className="text-xs text-muted-foreground ml-2">2 weeks ago</span>
+              </div>
+
+              <p className="text-foreground leading-relaxed">
+                "Absolutely amazing job! Our house looks brand new after the power washing. ATP was very professional, on time, and paid attention to every detail from the siding to the porch. I didn't realize how much of a difference it would make…"
+              </p>
+            </div>
+
+            <div className="mt-6 text-center">
               <a
                 href="https://share.google/ifD6QLW25qEgsnXDu"
                 target="_blank"
