@@ -1,20 +1,38 @@
 
 
-## Plan: Improve Hero Image Visibility
+## Plan: Add Google & Facebook Review Widgets
 
-**Change:** In `src/index.css`, reduce the hero overlay gradient opacity from `0.95` to `0.70` on both color stops. This lets 30% of the background image show through instead of the current 5%, a roughly 25% improvement in visibility.
+**Goal:** Add a "Reviews" section with embedded live Google and Facebook review widgets for social proof/credibility.
 
-### File: `src/index.css` (line 51)
+### Placement
 
-**Before:**
-```css
---gradient-hero: linear-gradient(135deg, hsl(210 100% 45% / 0.95) 0%, hsl(215 50% 20% / 0.95) 100%);
-```
+New `Reviews` component inserted between `Services` and `ServiceAreas` in the page layout — right after the work showcase, before the coverage map.
 
-**After:**
-```css
---gradient-hero: linear-gradient(135deg, hsl(210 100% 45% / 0.70) 0%, hsl(215 50% 20% / 0.70) 100%);
-```
+### Design
 
-Single line change. Text remains legible with this opacity level.
+- Section heading: "What Our Customers Say" with a subheading
+- Two-column layout (stacked on mobile):
+  - **Google Reviews** — embedded via [Elfsight](https://elfsight.com) or Google's Place Reviews widget
+  - **Facebook Reviews** — embedded via Facebook Page Plugin (reviews tab)
+- Each column gets a card with the platform logo/label and the embed below
+
+### Technical Details
+
+**Problem:** Google and Facebook don't offer simple free embed widgets natively. The standard approaches are:
+
+1. **Google Reviews** — Use an `<iframe>` or `<script>` embed from a widget service (Elfsight, Trustmary, etc.), OR manually curate reviews as cards with a "See all on Google" link
+2. **Facebook Reviews** — Use the Facebook Page Plugin with the `reviews` tab: `https://www.facebook.com/plugins/page.php?href=...&tabs=reviews`
+
+### What I need from you
+
+1. **Google Business Profile name or Place ID** — so I can set up the Google reviews embed. You can find this by searching your business on Google Maps.
+2. **Facebook Page URL** — I see `https://www.facebook.com/share/17n95D4n9h/` in the footer. Is this the correct Facebook page to pull reviews from?
+3. **Embed preference** — For Google reviews, would you prefer:
+   - A free Facebook-style iframe embed (limited styling)
+   - Manually curated review cards (you provide the review text/names, with a link to Google)
+
+### Files to Create/Modify
+
+- **`src/components/Reviews.tsx`** — new component with review embeds
+- **`src/pages/Index.tsx`** — add `<Reviews />` between Services and ServiceAreas
 
