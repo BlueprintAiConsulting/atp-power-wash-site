@@ -18,6 +18,7 @@ const Index = () => {
         <Hero />
         <ProofStrip />
         <Services />
+        <Reviews />
         <ServiceAreas />
         <FAQ />
         <QuoteSection />
