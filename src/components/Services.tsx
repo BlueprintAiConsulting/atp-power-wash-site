@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { useSeamlessVideoLoop } from "@/hooks/use-seamless-video-loop";
+import beforeAfterVideo from "@/assets/before-after-wash.mp4";
 import serviceHouseWash from "@/assets/service-house-wash.jpg";
 import serviceGutter from "@/assets/service-gutter.jpg";
 import serviceSidewalk from "@/assets/service-sidewalk.jpg";
@@ -40,6 +42,8 @@ const services = [
 ];
 
 const Services = () => {
+  const videoRef = useSeamlessVideoLoop({ cutSeconds: 1.2 });
+
   return (
     <section id="services" className="py-20 md:py-28 md:pt-36 bg-muted">
       <div className="container">
@@ -89,6 +93,42 @@ const Services = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Before & After Video Showcase */}
+        <div className="mt-16 lg:mt-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            {/* Video */}
+            <div className="rounded-2xl overflow-hidden border border-border shadow-lg">
+              <video
+                ref={videoRef}
+                className="w-full h-auto"
+                autoPlay
+                muted
+                playsInline
+                preload="auto"
+              >
+                <source src={beforeAfterVideo} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+
+            {/* Text + CTA */}
+            <div>
+              <span className="inline-block text-primary font-heading font-bold text-sm uppercase tracking-widest mb-4">
+                Before &amp; After
+              </span>
+              <h3 className="text-3xl md:text-4xl font-extrabold text-foreground mb-4">
+                See the Difference
+              </h3>
+              <p className="text-lg text-muted-foreground mb-8">
+                Watch a full house soft wash in action. Real results, real homes — no shortcuts.
+              </p>
+              <Button variant="cta" size="xl" asChild>
+                <a href="#quote">Get Free Quote</a>
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
