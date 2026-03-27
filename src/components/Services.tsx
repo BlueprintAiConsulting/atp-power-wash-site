@@ -42,6 +42,8 @@ const services = [
 ];
 
 const Services = () => {
+  const videoRef = useSeamlessVideoLoop({ cutSeconds: 1.2 });
+
   return (
     <section id="services" className="py-20 md:py-28 md:pt-36 bg-muted">
       <div className="container">
