@@ -1,15 +1,37 @@
 
 
-## Plan: Restore OG Image to ATP Logo on Gray Background
+## Plan: Add Before/After Video Inside the Services Section
 
-The uploaded screenshot shows the previous iMessage preview: the ATP logo centered on a clean gray/silver background. We need to restore that exact look.
+**Goal:** Add a before/after house wash video as a featured element within the Services section.
+
+### Design
+
+Add a full-width "Before & After" video showcase below the service cards grid, still inside the Services section. It will feature:
+- A heading like "See the Difference" or "Before & After"
+- The video in a rounded card with autoplay/muted/loop (matching the ProofStrip video style)
+- A CTA button beside or below it
 
 ### Steps
 
-1. **Copy the uploaded image** (`user-uploads://IMG_2401.jpeg`) to `public/og-image.png`, replacing the current one. This image already shows the ATP logo centered on the gray background — exactly what the client wants.
+1. **Upload the video** — You'll provide the before/after video file, and I'll add it to `src/assets/`
 
-2. **No changes to `index.html`** — the meta tags already point to `/og-image.png` with correct 1200×630 dimensions.
+2. **Update `src/components/Services.tsx`** — Add a new subsection after the services grid (line 92) with:
+   - A two-column layout (video left, text + CTA right) on desktop; stacked on mobile
+   - The video using the same seamless loop hook (`useSeamlessVideoLoop`) as ProofStrip
+   - Heading, short description, and a "Get Free Quote" button
 
-### Files Changed
-- **`public/og-image.png`** — replaced with the uploaded ATP logo image
+### Layout (desktop)
+```text
+┌─────────────────────────────────────────┐
+│           Services Grid (existing)       │
+├────────────────────┬────────────────────┤
+│                    │  "See the          │
+│   [Before/After    │   Difference"      │
+│    Video]          │   Description...   │
+│                    │   [Get Free Quote] │
+└────────────────────┴────────────────────┘
+```
+
+### What I need from you
+Upload the before/after video file so I can add it to the project.
 
