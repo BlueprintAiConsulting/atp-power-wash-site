@@ -68,7 +68,7 @@ const Hero = () => {
             {[
               "Licensed & Insured",
               "100% Satisfaction Guarantee",
-              "Free Estimates",
+              "Premium Results, Honest Prices",
             ].map((point) => (
               <div key={point} className="flex items-center gap-2 text-primary-foreground/90">
                 <CheckCircle className="h-5 w-5 text-brand-red flex-shrink-0" />
