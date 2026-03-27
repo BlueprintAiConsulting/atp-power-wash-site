@@ -76,15 +76,28 @@ const Reviews = () => {
               </svg>
               <h3 className="text-xl font-bold text-foreground">Facebook Reviews</h3>
             </div>
-            <div className="flex justify-center">
+            <div className="space-y-4">
               <iframe
-                src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D61576864807279&tabs=reviews&width=340&height=500&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true"
-                width="340"
-                height="500"
+                src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fnicole.keefer.5%2Fposts%2Fpfbid0FCdz2ndcTJgHLksvUiiB6DknHRQH8uxQ4KSymKBt5e6RuUrMFjP4LJL5xNrrsaaWl&show_text=true&width=500"
+                width="500"
+                height="208"
                 style={{ border: "none", overflow: "hidden" }}
+                scrolling="no"
+                allowFullScreen
                 allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                className="max-w-full"
-                title="Facebook Reviews"
+                className="max-w-full w-full"
+                title="Facebook Review 1"
+              />
+              <iframe
+                src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fnataliemumaw%2Fposts%2Fpfbid0CbVVfXidRrJYUKDRnCK4u4CuZtaM6ZYdUBp4jxHjmDkPbL7sMWbW2NoLFtRU7nHCl&show_text=true&width=500"
+                width="500"
+                height="228"
+                style={{ border: "none", overflow: "hidden" }}
+                scrolling="no"
+                allowFullScreen
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                className="max-w-full w-full"
+                title="Facebook Review 2"
               />
             </div>
           </div>
