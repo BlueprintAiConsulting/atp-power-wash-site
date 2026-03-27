@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import StickyBar from "@/components/StickyBar";
 import ProofStrip from "@/components/ProofStrip";
 import Services from "@/components/Services";
+import Reviews from "@/components/Reviews";
 import ServiceAreas from "@/components/ServiceAreas";
 import FAQ from "@/components/FAQ";
 import QuoteSection from "@/components/QuoteSection";
