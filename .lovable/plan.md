@@ -1,38 +1,26 @@
 
 
-## Plan: Add Google & Facebook Review Widgets
+## Plan: Add Manual Google Review Card
 
-**Goal:** Add a "Reviews" section with embedded live Google and Facebook review widgets for social proof/credibility.
+Replace the Elfsight placeholder in `src/components/Reviews.tsx` with a styled testimonial card showing this review:
 
-### Placement
+- **Reviewer:** Unique C
+- **Rating:** 5 stars
+- **Date:** 2 weeks ago
+- **Text:** "Absolutely amazing job! Our house looks brand new after the power washing. ATP was very professional, on time, and paid attention to every detail from the siding to the porch. I didn't realize how much of a difference it would make…"
 
-New `Reviews` component inserted between `Services` and `ServiceAreas` in the page layout — right after the work showcase, before the coverage map.
+### Changes
 
-### Design
+**`src/components/Reviews.tsx`**
+- Remove the Elfsight script loading `useEffect`
+- Replace the `elfsight-app-lazy` div with a review card containing:
+  - Reviewer avatar initial ("U"), name, "5 reviews" subtitle
+  - 5 filled gold stars
+  - "2 weeks ago" timestamp
+  - Review text
+  - Keep the existing "See all reviews on Google →" link
+- Keep the Facebook embed column as-is
 
-- Section heading: "What Our Customers Say" with a subheading
-- Two-column layout (stacked on mobile):
-  - **Google Reviews** — embedded via [Elfsight](https://elfsight.com) or Google's Place Reviews widget
-  - **Facebook Reviews** — embedded via Facebook Page Plugin (reviews tab)
-- Each column gets a card with the platform logo/label and the embed below
-
-### Technical Details
-
-**Problem:** Google and Facebook don't offer simple free embed widgets natively. The standard approaches are:
-
-1. **Google Reviews** — Use an `<iframe>` or `<script>` embed from a widget service (Elfsight, Trustmary, etc.), OR manually curate reviews as cards with a "See all on Google" link
-2. **Facebook Reviews** — Use the Facebook Page Plugin with the `reviews` tab: `https://www.facebook.com/plugins/page.php?href=...&tabs=reviews`
-
-### What I need from you
-
-1. **Google Business Profile name or Place ID** — so I can set up the Google reviews embed. You can find this by searching your business on Google Maps.
-2. **Facebook Page URL** — I see `https://www.facebook.com/share/17n95D4n9h/` in the footer. Is this the correct Facebook page to pull reviews from?
-3. **Embed preference** — For Google reviews, would you prefer:
-   - A free Facebook-style iframe embed (limited styling)
-   - Manually curated review cards (you provide the review text/names, with a link to Google)
-
-### Files to Create/Modify
-
-- **`src/components/Reviews.tsx`** — new component with review embeds
-- **`src/pages/Index.tsx`** — add `<Reviews />` between Services and ServiceAreas
+### Files Changed
+- **`src/components/Reviews.tsx`** — replace Elfsight with static review card
 
